@@ -5,3 +5,10 @@ typescript course by dave
 ```typescript
 tsc main.ts
 ```
+
+```C
+#include<stdio.h>
+int main(){
+    return 0;
+}
+```
