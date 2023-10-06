@@ -1,24 +1,33 @@
 # Typescript
+
 typescript course by dave
 
 ## run typescript in command line
+
 ```bash
 tsc main.ts
 ```
+
 ## What's inside build folder
+
 compiled code - html,css,js
 
 ## What's inside src folder
+
 ts
 
 ## Initialize a project as a typescript project
+
 ```bash
 tsc --init
 ```
+
 It creates a tsconfig.json file
 
 ## to specify where our typescript file is stored
-in tsconfig.json specify 
+
+in tsconfig.json specify
+
 ```JSON
 {
     ...
@@ -26,8 +35,11 @@ in tsconfig.json specify
  ...
 }
 ```
+
 ## to specify where javascript file is stored
-in tsconfig.json specify 
+
+in tsconfig.json specify
+
 ```JSON
 {
     ...
@@ -36,25 +48,34 @@ in tsconfig.json specify
 }
 ```
 
-## to run typescript file as `npm start`
+## To create tsconfig.json file
+
 ```bash
 tsc --init
 ```
 
+## to run typescript file as `npm start`
+
+```bash
+tsc -w
+```
+
 ## how to include only `src folder` in the compilation of typescript code
+
 ```json
 {
     ...,
 "include": ["src"]
 }
 ```
+
 only src folder is used for compilation
 
 ## if we don't want to create js file if ts-file has errors
+
 ```json
 {
     ...,
     "noEmitOnError": true
-} 
+}
 ```
-
