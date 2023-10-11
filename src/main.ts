@@ -1,99 +1,129 @@
-let stringArr=['one','hey','Dave'];
-let guitars=['onedfad','heydfasf',5150];
-
-let mixedData=['EVH',1984,true]
-
-stringArr[0]='John'
-stringArr.push('John cena');
-
-guitars[0]=1984
-guitars.unshift('JIM')
-
-let test=[];  //any
-
-let bands:string[]=[]
-bands.push('Van Halen')
-
-//Tuple
-let myTuple:[string,number,boolean]=['Dave',42,true]
-
-let mixed=['john',1,false]
-
-mixed=myTuple; //no error  
-/*
-mixed is a type of :       let mixed: (string | number | boolean)[]
-myTuple can be assigned to mixed
-*/
-
-// myTuple=mixed; //error
+//Type Aliases   //it doesnot works for interfaces
 
 
-
-//OBJECTS
-let myObj:object
-myObj=[]
-console.log(typeof myObj)
-myObj=bands
-myObj={}
-
-const exampleObj={
-    prop1:'Dave',
-    prop2:true
-}
-
-
-//to annotate a type of object
+type stringOrNumber= string | number
+type stringOrNumberArray = (string | number)[]
 
 type Guitarist={
     name:string,
     active:boolean,
-    albums:(string | number)[]
+    albums:stringOrNumberArray
 }
 
+type UserId=stringOrNumber
+
+//Literal types
+let myName:'Dave'
+myName='Dave'
+// myName='john'  //error
+
+let username:'Dave' | 'john' | 'Amy'
+
+username='john';// it expects only 3 values: Dave john Amy
+
+// functions
+const add = (a: number, b:number) :number =>{
+    return a + b
+}
+const subtract = (a: number, b:number) :number =>{
+    return a - b
+}
+   
+const logMsg = (message: any):void=>{
+    console. log(message)
+}
+  
+logMsg( 'Hello! ')
+logMsg(add(2,3))
+
+
+type mathFunction = (a: number, b: number) => number
 /*
-//we  can't create object as below:
-// it gives error
-let evh:Guitarist={
-    name:'Eddie',
-    albums:[1984,'abc']
+interface mathFunction {
+    (a: number, b: number): number
 }
 
 */
+let multiply: mathFunction = function (c, d){
+ return c * d
+}
+
+logMsg(multiply(2,3))
+
+
+
+
+// optional parameters
+const addAll = (a: number, b: number,c?:number ):
+    number => {
+    if (typeof c !=='undefined'){
+        return a+b+c
+    }
+    return a+b
+    }    
+const sumAll = (a: number, b: number,c:number=2 ):
+    number => {
+    
+    return a+b+c
+    }    
+ //generally default arguments should be written at end
+
 
 /*
-//if we create like below:
-type Guitarist={
-    name:string,
-    active?:boolean,
-    albums:(string | number)[]
-}
+if you wan't to use default argument at the beginning
 
-then, we can create a object like below:
-may or may not include active properity
-let evh:Guitarist={
-    name:'Eddie',
-    albums:[1984,'abc']
-}
+then,
+const sumAll = (a: number=10, b: number,c:number=2 ):
+    number => {
+    return a+b+c
+    }   
 
 
+    call this function as below:
+
+    sumAll(undefined,3)
 */
 
-//we need to include all the properties
-let evh:Guitarist={
-    name:'Eddie',
-active:false,
-    albums:[1984,'abc']
+logMsg(addAll(2,3,2))
+logMsg(sumAll(2,3,2))
+
+//Rest parameters
+const total=(...nums:number[]):number=>{
+    return nums.reduce((prev,curr)=> prev+curr)
 }
 
-const greetGuitarist=(guitarist:Guitarist)=>{
-    return `Hello ${guitarist.name}`;
+logMsg(total(1,2))
+
+//never return type
+
+//for infinite loops and throw errors
+
+const createError =(errMsg:string):never=>{
+ 
+    throw new Error(errMsg)
 }
 
-//Enums
-// "Unlike most TypeScript features, Enums are not a type-level addition to JavaScript but something added to the language and runtime. "
 
-enum Grade {
-    U=1,D,C,B,A
+//endless loop
+    const infinite = ()=>{
+    let i: number=0;
+    while (true){
+    i++
+    }
+
 }
 
-console.log(Grade.A) //5
+// custom type guard
+const isNumber=(value: any): boolean =>{
+    return typeof value === 'number' ? true : false
+}
+  
+   
+   
+
+//usage of never type
+const numberOrString=(value: number | string):string=>{
+if (typeof value =='string') return 'string'
+if (typeof value =='number') return 'number'
+return createError( 'This should never happen!');
+}
